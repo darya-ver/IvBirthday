@@ -20,24 +20,44 @@ public class IvBirthday extends PApplet {
 
 private static final int NUM_ROWS = 4;
 private static final int NUM_COLS = 4;
-private static final int NUM_ORIGINAL_BOXES = 2; //number of original numbered boxes
+private static final int NUM_ORIGINAL_BOXES = 2; 
 
 private int score = 0;
 
 private MSButton[][] buttons;
 
-private ArrayList <MSButton> numberedSquares= new ArrayList <MSButton>();
+private ArrayList <MSButton> numberedSquares = new ArrayList <MSButton>();
 
 public boolean gameStarted = true;
 public boolean playGame = false;
 public boolean gameIsOver = false;
 
-public GameButton start = new GameButton(500/2, 700/2, "start");
+public PImage ivPhoto1;
+public PImage ivPhoto2;
+public PImage ivPhoto3;
+public PImage ivPhoto4;
+public PImage ivPhoto5;
+public PImage ivPhoto6;
+public PImage ivPhoto7;
+public PImage ivPhoto8;
+public PImage ivPhoto9;
+
+public GameButton start = new GameButton(1000/2-105, 700/2-35, "start");
 
 public void setup ()
 {
     
     textAlign(CENTER,CENTER);
+
+    ivPhoto1 = loadImage("imgIv1.PNG");
+    ivPhoto2 = loadImage("imgIv2.PNG");
+    ivPhoto3 = loadImage("imgIv3.PNG");
+    ivPhoto4 = loadImage("imgIv4.PNG");
+    ivPhoto5 = loadImage("imgIv5.PNG");
+    ivPhoto6 = loadImage("imgIv6.JPG");
+    ivPhoto7 = loadImage("imgIv7.JPG");
+    ivPhoto8 = loadImage("imgIv8.PNG");
+    ivPhoto9 = loadImage("imgIv9.PNG");
 
     // make the manager
     Interactive.make( this );
@@ -55,7 +75,31 @@ public void setup ()
 public void draw ()
 {
     background(0);
-    start.show();
+
+    if(gameStarted) startScreen();
+    else if(playGame){gamePlay();}
+    else if(gameIsOver){endGame();}
+}
+
+public void mousePressed()
+{
+    if(gameStarted)
+    {
+        if(start.inButton())
+        {
+            gamePlay();
+        }
+    }
+    else if(gameIsOver)
+    {
+        if(start.inButton())
+        {
+            restartNumbers();
+            setFirstNums();
+            playGame = true;
+            score = 0;
+        }
+    }
 }
 
 public void keyPressed()
@@ -103,14 +147,15 @@ public class MSButton
     private int r, c, myValue;
     private float x,y, width, height;
     private boolean alreadyCombinedOnce, isStuck, up, down, left, right;
+    private PImage faceImage;
     
     public MSButton ( int rr, int cc )
     {
-        width = 300/NUM_COLS;
-        height = 300/NUM_ROWS;
+        width = 500/NUM_COLS;
+        height = 500/NUM_ROWS;
         r = rr;
         c = cc; 
-        x = c*width + 100;
+        x = c*width + 250;
         y = r*height;
         myValue = 0;
         alreadyCombinedOnce = false;
@@ -130,22 +175,21 @@ public class MSButton
     	{
 	        noStroke();
 
-	        if(myValue == 2){fill(236,226,216);}
-	        else if(myValue == 4){fill(236,224,200);}
-	        else if(myValue == 8){fill(242,177,123);}
-	        else if(myValue == 16){fill(246,148,99);}
-	        else if(myValue == 32){fill(243,126,90);}
-	        else if(myValue == 64){fill(239,97,60);}
-	        else if(myValue == 128){fill(239,205,112);}
-	        else if(myValue == 256){fill(237,205,97);}
-	        else if(myValue == 512){fill(236,200,80);}
+            if(myValue == 0){fill(204,192,178);rect(x,y,width,height);}
+	        if(myValue == 2){faceImage = ivPhoto8;}
+	        else if(myValue == 4){faceImage = ivPhoto2;}
+	        else if(myValue == 8){faceImage = ivPhoto1;}
+	        else if(myValue == 16){faceImage = ivPhoto4;}
+	        else if(myValue == 32){faceImage = ivPhoto3;}
+	        else if(myValue == 64){faceImage = ivPhoto5;}
+	        else if(myValue == 128){faceImage = ivPhoto6;}
+	        else if(myValue == 256){faceImage = ivPhoto7;}
+	        else if(myValue == 512){faceImage = ivPhoto8;}
 	        else if(myValue == 1024){fill(239,197,63);}
 	        else if(myValue == 2048){fill(240,192,49);}
 	        else{fill(204,192,178);}
 
-	        rect(x, y, width, height);
-
-	        //noStroke();
+            if(myValue > 0){image(faceImage, x+width/2,y+height/2,width,height);}
 	        
 	        fill(185,173,159);
 	        quad(x, y, x+4, y, x+4, y+height-4, x, y+height);
@@ -156,10 +200,9 @@ public class MSButton
 
 	        if(myValue > 0)
 	        {
-	            if(myValue <=4){fill(118,106,92);}
-	            else{fill(255);}
+                fill(255);
 	            textSize(35);
-	            text("" + myValue,x+width/2,y+height/2-3);            
+	            text("" + myValue, x+width/2, y+height/2-3);            
 	        }
 	        else 
 	        {
@@ -309,12 +352,6 @@ public class MSButton
         
         return false;
     }
-
-    //     if(up && down && left && right)
-    //     	return true;
-
-    //     return false;
-    // }
 }
 
 public class GameButton
@@ -339,6 +376,7 @@ public class GameButton
         fill(255,0,0);
         textSize(30);
 
+        /*
         if (myType == "left")
         {
           strokeWeight(3);
@@ -371,11 +409,12 @@ public class GameButton
           line(myX + 35, myY + 56, myX + 24, myY + 43);
           line(myX + 35, myY + 56, myX + 46, myY + 43);
         }
-        else if(myType == "start")
+        */
+        if(myType == "start")
         {
         	widthh = 210;
         	textSize(50);
-        	text("S", myX + widthh/2, myY + heightt/2);
+        	text("Start", myX + widthh/2, myY + heightt/2-7);
         }
 
         if(inButton())
@@ -405,26 +444,35 @@ public class GameButton
 //different screen functions
 public void startScreen()
 {
+    gameStarted = true;
 	playGame = false;
 	gameIsOver = false;
-
-	
+    start.show();
 
 }
 public void gamePlay()
 {
 	gameStarted = false;
 	gameIsOver = false;
+    playGame = true;
 
-	text("Score: " + score, width/2, width/2+100);
-	if(gameOver())	gameIsOver = true;
+    fill(255);
+	text("Score: " + score, width/2, 600);
+	
+    if(gameOver())
+    {
+        gameIsOver = true;
+        gameStarted = false;
+        playGame = false;
+    }
 }
 public void endGame()
 {
+    gameIsOver = true;
 	gameStarted = false;
 	playGame = false;
 
-	text("GAME OVER", width/2, height/2 + 100);
+	text("GAME OVER", width/2, 600);
 }
 
 //setting number functions
@@ -445,6 +493,14 @@ public void addAnotherNumber()
     }
     else
         addAnotherNumber();
+}
+public void restartNumbers()
+{
+    for(int c = 0; c<NUM_COLS; c++)
+        for(int r = 0; r<NUM_ROWS; r++)
+        {
+            buttons[r][c].setValue(0);
+        }
 }
 
 //stuck functions
@@ -518,7 +574,7 @@ public boolean gameOver()
 
 
 
-  public void settings() {  size(500, 700); }
+  public void settings() {  size(1000, 700); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "IvBirthday" };
     if (passedArgs != null) {
