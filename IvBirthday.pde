@@ -14,6 +14,13 @@ public boolean gameStarted = true;
 public boolean playGame = false;
 public boolean gameIsOver = false;
 
+public PImage ivPhoto1;
+public PImage ivPhoto2;
+public PImage ivPhoto3;
+public PImage ivPhoto4;
+public PImage ivPhoto5;
+
+
 public GameButton start = new GameButton(500/2, 700/2, "start");
 
 public void setup ()
