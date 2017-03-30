@@ -31,15 +31,15 @@ public void setup ()
     size(1000, 700);
     textAlign(CENTER,CENTER);
 
-    ivPhoto1 = loadImage("imgIv1.PNG");
-    ivPhoto2 = loadImage("imgIv2.PNG");
-    ivPhoto3 = loadImage("imgIv3.PNG");
-    ivPhoto4 = loadImage("imgIv4.PNG");
-    ivPhoto5 = loadImage("imgIv5.PNG");
-    ivPhoto6 = loadImage("imgIv6.JPG");
-    ivPhoto7 = loadImage("imgIv7.JPG");
-    ivPhoto8 = loadImage("imgIv8.PNG");
-    ivPhoto9 = loadImage("imgIv9.PNG");
+    ivPhoto1 = loadImage("Data/imgIv1.PNG");
+    ivPhoto2 = loadImage("Data/imgIv2.PNG");
+    ivPhoto3 = loadImage("Data/imgIv3.PNG");
+    ivPhoto4 = loadImage("Data/imgIv4.PNG");
+    ivPhoto5 = loadImage("Data/imgIv5.PNG");
+    ivPhoto6 = loadImage("Data/imgIv6.JPG");
+    ivPhoto7 = loadImage("Data/imgIv7.JPG");
+    ivPhoto8 = loadImage("Data/imgIv8.PNG");
+    ivPhoto9 = loadImage("Data/imgIv9.PNG");
 
     // make the manager
     Interactive.make( this );
