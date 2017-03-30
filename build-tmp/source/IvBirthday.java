@@ -60,7 +60,7 @@ public void setup ()
     ivPhoto9 = loadImage("Data/imgIv9.PNG");
 
     // make the manager
-    Interactive.make( this );
+    Interactive.make(this);
     
     buttons = new MSButton[NUM_ROWS][NUM_COLS];
 
@@ -192,14 +192,29 @@ public class MSButton
             if(myValue > 0){image(faceImage, x+width/2,y+height/2,width,height);}
 	        
 	        fill(185,173,159);
+
+            //edges of the boxes
 	        quad(x, y, x+4, y, x+4, y+height-4, x, y+height);
 	        quad(x, y, x+width, y, x+width-4, y+4, x, y+4);
-	        
 	        quad(x+4, y+height-4, x+width, y+height-4, x+width, y+height, x, y+height);
 	        quad(x+width-4, y+4, x+width, y, x+width, y+height, x+width-4, y+height);
 
+            if(myValue > 0 && myValue < 128)
+            {
+                //square behind numbers
+                fill(150,150,150,150);
+                rect(x+3*width/8,y+3*height/8,width/4,height/4,4);
+            }
+            else if(myValue > 127)
+            {
+                //square behind numbers
+                fill(150,150,150,150);
+                rect(x+width/4,y+3*height/8,width/2,height/4,4);
+            }
 	        if(myValue > 0)
 	        {
+                
+                //value text
                 fill(255);
 	            textSize(35);
 	            text("" + myValue, x+width/2, y+height/2-3);            
