@@ -41,8 +41,13 @@ public PImage ivPhoto6;
 public PImage ivPhoto7;
 public PImage ivPhoto8;
 public PImage ivPhoto9;
+public PImage ivPhoto10;
+public PImage ivPhoto11;
+public PImage ivPhoto12;
+public PImage ivPhoto13;
 
 public GameButton start = new GameButton(1000/2-105, 700/2-35, "start");
+public GameButton restart = new GameButton(1000/2-105, 700/2-35, "restart");
 
 public void setup ()
 {
@@ -58,6 +63,10 @@ public void setup ()
     ivPhoto7 = loadImage("Data/imgIv7.JPG");
     ivPhoto8 = loadImage("Data/imgIv8.PNG");
     ivPhoto9 = loadImage("Data/imgIv9.PNG");
+    ivPhoto10 = loadImage("Data/imgIv10.jpg");
+    ivPhoto11 = loadImage("Data/imgIv11.PNG");
+    ivPhoto12 = loadImage("Data/imgIv12.PNG");
+    ivPhoto13 = loadImage("Data/imgIv13.JPG");
 
     // make the manager
     Interactive.make(this);
@@ -74,7 +83,7 @@ public void setup ()
 
 public void draw ()
 {
-    background(0);
+    background(150);
 
     if(gameStarted) startScreen();
     else if(playGame){gamePlay();}
@@ -176,17 +185,20 @@ public class MSButton
 	        noStroke();
 
             if(myValue == 0){fill(204,192,178);rect(x,y,width,height);}
+
 	        if(myValue == 2){faceImage = ivPhoto8;}
 	        else if(myValue == 4){faceImage = ivPhoto2;}
-	        else if(myValue == 8){faceImage = ivPhoto1;}
-	        else if(myValue == 16){faceImage = ivPhoto4;}
-	        else if(myValue == 32){faceImage = ivPhoto3;}
-	        else if(myValue == 64){faceImage = ivPhoto5;}
-	        else if(myValue == 128){faceImage = ivPhoto6;}
-	        else if(myValue == 256){faceImage = ivPhoto7;}
-	        else if(myValue == 512){faceImage = ivPhoto8;}
-	        else if(myValue == 1024){fill(239,197,63);}
-	        else if(myValue == 2048){fill(240,192,49);}
+            else if(myValue == 8){faceImage = ivPhoto10;}
+	        else if(myValue == 16){faceImage = ivPhoto1;}
+	        else if(myValue == 32){faceImage = ivPhoto4;}
+	        else if(myValue == 64){faceImage = ivPhoto3;}
+	        else if(myValue == 128){faceImage = ivPhoto5;}
+	        else if(myValue == 256){faceImage = ivPhoto6;}
+	        else if(myValue == 512){faceImage = ivPhoto7;}
+	        else if(myValue == 1024){faceImage = ivPhoto9;}
+	        else if(myValue == 2048){faceImage = ivPhoto11;}
+	        else if(myValue == 4096){faceImage = ivPhoto12;}
+            else if(myValue == 8192){faceImage = ivPhoto13;}
 	        else{fill(204,192,178);}
 
             if(myValue > 0){image(faceImage, x+width/2,y+height/2,width,height);}
@@ -199,21 +211,8 @@ public class MSButton
 	        quad(x+4, y+height-4, x+width, y+height-4, x+width, y+height, x, y+height);
 	        quad(x+width-4, y+4, x+width, y, x+width, y+height, x+width-4, y+height);
 
-            if(myValue > 0 && myValue < 128)
-            {
-                //square behind numbers
-                fill(150,150,150,150);
-                rect(x+3*width/8,y+3*height/8,width/4,height/4,4);
-            }
-            else if(myValue > 127)
-            {
-                //square behind numbers
-                fill(150,150,150,150);
-                rect(x+width/4,y+3*height/8,width/2,height/4,4);
-            }
 	        if(myValue > 0)
 	        {
-                
                 //value text
                 fill(255);
 	            textSize(35);
@@ -429,7 +428,15 @@ public class GameButton
         {
         	widthh = 210;
         	textSize(50);
+            fill(66,134,235);
         	text("Start", myX + widthh/2, myY + heightt/2-7);
+        }
+        else if(myType == "restart")
+        {
+            widthh = 210;
+            textSize(50);
+            fill(66,134,235);
+            text("Restart", myX + widthh/2, myY + heightt/2-7);
         }
 
         if(inButton())
@@ -463,7 +470,6 @@ public void startScreen()
 	playGame = false;
 	gameIsOver = false;
     start.show();
-
 }
 public void gamePlay()
 {
@@ -472,6 +478,7 @@ public void gamePlay()
     playGame = true;
 
     fill(255);
+    textSize(40);
 	text("Score: " + score, width/2, 600);
 	
     if(gameOver())
@@ -486,6 +493,8 @@ public void endGame()
     gameIsOver = true;
 	gameStarted = false;
 	playGame = false;
+
+    restart.show();
 
 	text("GAME OVER", width/2, 600);
 }
