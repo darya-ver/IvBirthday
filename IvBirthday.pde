@@ -74,7 +74,7 @@ public void setup ()
 
 public void draw ()
 {
-    background(150);
+    background(200,200,200);
 
     if(gameStarted){startScreen();}
     else if(instructions){instructionsFunc();}
