@@ -164,7 +164,7 @@ public class MSButton
         r = rr;
         c = cc; 
         x = c*width + 250;
-        y = r*height;
+        y = r*height + 40;
         myValue = 0;
         alreadyCombinedOnce = false;
 
