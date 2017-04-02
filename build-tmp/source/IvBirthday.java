@@ -29,6 +29,7 @@ private MSButton[][] buttons;
 private ArrayList <MSButton> numberedSquares = new ArrayList <MSButton>();
 
 public boolean gameStarted = true;
+public boolean instructions = false;
 public boolean playGame = false;
 public boolean gameIsOver = false;
 
@@ -45,9 +46,13 @@ public PImage ivPhoto10;
 public PImage ivPhoto11;
 public PImage ivPhoto12;
 public PImage ivPhoto13;
+public PImage birthdaySignPhoto;
+public PImage emmaPhoto;
+public PImage pugPhoto;
+public PImage instructionsPhoto;
 
-public GameButton start = new GameButton(1000/2-105, 700/2-35, "start");
-public GameButton restart = new GameButton(1000/2-105, 700/2-35, "restart");
+public GameButton start = new GameButton(1000/2-160, 550, "start");
+public GameButton restart = new GameButton(1000/2-160, 700/2-60, "restart");
 
 public void setup ()
 {
@@ -67,6 +72,10 @@ public void setup ()
     ivPhoto11 = loadImage("Data/imgIv11.PNG");
     ivPhoto12 = loadImage("Data/imgIv12.PNG");
     ivPhoto13 = loadImage("Data/imgIv13.JPG");
+    birthdaySignPhoto = loadImage("Data/birthdayBan.JPG");
+    emmaPhoto = loadImage("Data/emmaStone.jpg");
+    pugPhoto = loadImage("Data/pugImg.PNG");
+    instructionsPhoto = loadImage("Data/instructionsImg.png");
 
     // make the manager
     Interactive.make(this);
@@ -85,7 +94,8 @@ public void draw ()
 {
     background(150);
 
-    if(gameStarted) startScreen();
+    if(gameStarted){startScreen();}
+    else if(instructions){instructionsFunc();}
     else if(playGame){gamePlay();}
     else if(gameIsOver){endGame();}
 }
@@ -96,12 +106,19 @@ public void mousePressed()
     {
         if(start.inButton())
         {
+            instructionsFunc();
+        }
+    }
+    else if(instructions)
+    {
+        if(start.inButton())
+        {
             gamePlay();
         }
     }
     else if(gameIsOver)
     {
-        if(start.inButton())
+        if(restart.inButton())
         {
             restartNumbers();
             setFirstNums();
@@ -379,8 +396,8 @@ public class GameButton
         myY = y;
         myType = type;
         myColor = 255;
-        widthh = 70;
-        heightt = 70;
+        widthh = 320;
+        heightt = 120;
     }
 
     public void show()
@@ -388,53 +405,19 @@ public class GameButton
         fill(myColor);
         rect(myX, myY, widthh, heightt, 10);
         fill(255,0,0);
-        textSize(30);
+        textSize(90);
 
-        /*
-        if (myType == "left")
-        {
-          strokeWeight(3);
-          stroke(0);
-          line(myX + 14, myY + 35, myX + 56, myY + 35);
-          line(myX + 14, myY + 35, myX + 27, myY + 24);
-          line(myX + 14, myY + 35, myX + 27, myY + 46);
-        }
-        else if(myType == "right")
-        {
-          strokeWeight(3);
-          stroke(0);
-          line(myX + 14, myY + 35, myX + 56, myY + 35);
-          line(myX + 56, myY + 35, myX + 43, myY + 46);
-          line(myX + 56, myY + 35, myX + 43, myY + 24);
-        }
-        else if(myType == "up")
-        {
-          strokeWeight(3);
-          stroke(0);
-          line(myX + 35, myY + 14, myX + 35, myY + 56);
-          line(myX + 35, myY + 14, myX + 24, myY + 27);
-          line(myX + 35, myY + 14, myX + 46, myY + 27);
-        }
-        else if(myType == "down")
-        {
-          strokeWeight(3);
-          stroke(0);
-          line(myX + 35, myY + 14, myX + 35, myY + 56);
-          line(myX + 35, myY + 56, myX + 24, myY + 43);
-          line(myX + 35, myY + 56, myX + 46, myY + 43);
-        }
-        */
         if(myType == "start")
         {
-        	widthh = 210;
-        	textSize(50);
+        	//widthh = 300;
+        	//textSize(50);
             fill(66,134,235);
         	text("Start", myX + widthh/2, myY + heightt/2-7);
         }
         else if(myType == "restart")
         {
-            widthh = 210;
-            textSize(50);
+            //widthh = 300;
+            //textSize(50);
             fill(66,134,235);
             text("Restart", myX + widthh/2, myY + heightt/2-7);
         }
@@ -469,13 +452,37 @@ public void startScreen()
     gameStarted = true;
 	playGame = false;
 	gameIsOver = false;
+    instructions = false;
+
     start.show();
+
+    image(birthdaySignPhoto, width/2, 150/2, width, 150);
+    image(emmaPhoto, width/4, height/2, 400, 250);
+    image(pugPhoto, 3*width/4, height/2);
+}
+public void instructionsFunc()
+{
+    gameStarted = false;
+    playGame = false;
+    gameIsOver = false;
+    instructions = true;
+
+    start.show();
+
+    image(instructionsPhoto, width/2, 150/2 + 5, 3*width/4 - 20, 150);
+
+    textSize(30);
+    fill(0);
+    text("Look at bottom of the page", width/2, height/2 - 40);
+    text("(adding text in java is annoying)", width/2, height/2 + 40);
 }
 public void gamePlay()
 {
 	gameStarted = false;
+    instructions = false;
 	gameIsOver = false;
     playGame = true;
+
 
     fill(255);
     textSize(40);
@@ -493,6 +500,7 @@ public void endGame()
     gameIsOver = true;
 	gameStarted = false;
 	playGame = false;
+    instructions = false;
 
     restart.show();
 
