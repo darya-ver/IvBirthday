@@ -15,7 +15,10 @@ header {
 	
 }
 
+h1 {
+    color: red;
+}
+
 footer {
-	font-style: italic;
 	font-size: 200;
 }
